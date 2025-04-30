@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Supply Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-chip color="light" class="user-chip">
+        <ion-avatar>
+          <img src="https://i.pravatar.cc/150?img=3" />
+        </ion-avatar>
+        <ion-label>{{ userName }}</ion-label>
+      </ion-chip>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Summary Cards - Mobile Stacked -->
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" size-sm="6" *ngFor="let card of summaryCards">
+        <ion-card class="summary-card">
+          <ion-card-header>
+            <ion-card-subtitle>{{ card.title }}</ion-card-subtitle>
+            <ion-card-title>{{ card.value }}</ion-card-title>
+          </ion-card-header>
+          <ion-icon [name]="card.icon" slot="end" [color]="card.color"></ion-icon>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Search Bar - Full Width -->
+  <ion-searchbar 
+    [(ngModel)]="searchQuery" 
+    (ionInput)="onSearchChange($event)" 
+    placeholder="Search products"
+    class="mobile-search">
+  </ion-searchbar>
+
+  <!-- Product Grid - Single Column for Mobile -->
+  <ion-grid class="mobile-product-grid">
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of filteredProducts">
+        <ion-card class="mobile-product-card" [class.item-selected]="isItemSelected(item)">
+          <div class="mobile-card-header">
+            <ion-checkbox 
+              [checked]="isItemSelected(item)"
+              (ionChange)="toggleItemSelection(item)"
+              class="mobile-checkbox">
+            </ion-checkbox>
+            <img [src]="item.image" class="mobile-product-image"/>
+            <div class="mobile-product-info">
+              <h3>{{ item.name }}</h3>
+              <p>{{ formatPrice(item.price) }} / {{ item.unit }}</p>
+            </div>
+          </div>
+          
+          <ion-card-content>
+            <div class="mobile-detail-row">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ item.manufactureDate | date:'shortDate' }}</span>
+            </div>
+            
+            <div class="mobile-detail-row" [class.low-stock]="item.quantity <= item.threshold">
+              <ion-icon name="scale-outline"></ion-icon>
+              <span>{{ item.quantity }} {{ item.unit }}</span>
+              <ion-badge *ngIf="item.quantity <= item.threshold" color="warning">Low</ion-badge>
+            </div>
+            
+            <div class="mobile-quantity-controls">
+              <ion-button fill="clear" color="danger" size="small" 
+                (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 0">
+                <ion-icon name="remove-outline"></ion-icon>
+              </ion-button>
+              
+              <ion-chip [color]="getQuantityColor(item.quantity, item.threshold)">
+                {{ item.quantity }}
+              </ion-chip>
+              
+              <ion-button fill="clear" color="success" size="small" (click)="updateQuantity(item, 1)">
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Mobile Payment Footer -->
+  <ion-footer *ngIf="selectedItems.length > 0" class="mobile-footer">
+    <ion-toolbar color="light">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="8">
+            <div class="mobile-total">
+              <strong>{{ formatPrice(getSelectedTotalPrice()) }}</strong>
+              <small>{{ getSelectedTotalQuantity() }} items</small>
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button expand="block" color="success" (click)="processPayment()">
+              Pay
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

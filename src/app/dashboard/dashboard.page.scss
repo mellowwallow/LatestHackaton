@@ -1,0 +1,127 @@
+/* Mobile-first styles */
+.mobile-product-grid {
+  padding: 0;
+}
+
+.mobile-product-card {
+  margin: 0 0 16px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+  &.item-selected {
+    border-left: 4px solid var(--ion-color-primary);
+    background: rgba(var(--ion-color-primary-rgb), 0.05);
+  }
+}
+
+.mobile-card-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 12px 0 12px;
+  position: relative;
+}
+
+.mobile-checkbox {
+  --size: 20px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.mobile-product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.mobile-product-info {
+  flex-grow: 1;
+  
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  p {
+    margin: 4px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.mobile-detail-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  
+  ion-icon {
+    margin-right: 8px;
+    color: var(--ion-color-medium);
+  }
+  
+  &.low-stock {
+    color: var(--ion-color-warning);
+    font-weight: 500;
+  }
+}
+
+.mobile-quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  
+  ion-button {
+    --padding-start: 4px;
+    --padding-end: 4px;
+  }
+  
+  ion-chip {
+    min-width: 36px;
+    margin: 0 8px;
+  }
+}
+
+.mobile-footer {
+  ion-toolbar {
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+  }
+  
+  .mobile-total {
+    display: flex;
+    flex-direction: column;
+    
+    strong {
+      font-size: 1.1rem;
+    }
+    
+    small {
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+/* Adjust summary cards for mobile */
+.summary-card {
+  ion-card-header {
+    padding: 12px;
+  }
+  
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+/* Make search bar full width */
+.mobile-search {
+  padding: 0;
+  margin-bottom: 16px;
+}
