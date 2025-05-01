@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Transactions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Transactions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let transaction of transactions">
+      <ion-label>
+        <h2>{{ transaction.date | date:'medium' }}</h2>
+        <p>Payment Method: {{ transaction.paymentMethod }}</p>
+        <ion-list>
+          <ion-item *ngFor="let item of transaction.items">
+            <ion-label>
+              {{ item.name }} ({{ item.quantity }})
+              <p>{{ formatPrice(item.price) }} each</p>
+            </ion-label>
+            <ion-note slot="end">
+              {{ formatPrice(item.price * item.quantity) }}
+            </ion-note>
+          </ion-item>
+        </ion-list>
+      </ion-label>
+      <ion-note slot="end" color="primary">
+        Total: {{ formatPrice(transaction.total) }}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>
